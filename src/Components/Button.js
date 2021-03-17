@@ -21,21 +21,17 @@ export default props => {
 
 const style = StyleSheet.create({
     container:{
-        flex:0,
-        justifyContent:'center',
-        width:50,
-        height:50,
-        margin:1
+        width:'25%'
     },
     button:{
         alignItems:'center',
-        backgroundColor:'#0000ff'
+        backgroundColor:'#0000ff',
+        margin:1,
     },
     buttonText: {
         fontSize:40,
-        fontWeight:'400',
         color:'#FFFF',
-        textAlign:'center'
+        alignItems:'center'
     }
     
 })

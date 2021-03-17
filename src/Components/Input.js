@@ -1,5 +1,5 @@
 import React from 'react' 
-import {Keyboard, TextInput, TouchableWithoutFeedback} from 'react-native' 
+import {TextInput} from 'react-native' 
 
 import {StyleSheet} from 'react-native';
 
@@ -20,7 +20,10 @@ export default props => {
 
 const style = StyleSheet.create({
     input: {
-        fontSize:30,
+        flex:6,
+        fontSize:60,
+        backgroundColor:'#f34',
+        textAlign: 'center'
     }
     
 })

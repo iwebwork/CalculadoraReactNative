@@ -7,9 +7,19 @@ export default StyleSheet.create({
     },
     
     body:{
+        flex:6,
+        backgroundColor:'#cccc'
+    },
+    Preview:{
         flex:1,
-        justifyContent: 'center',
-        alignItems:'center'
+        alignItems:'flex-end',
+        textAlign:'right',
+        fontSize:20
+    },
+    horizontal:{
+        flex:1,
+        flexDirection:'row',
+        backgroundColor:'#ddd444'
     }
 })
 

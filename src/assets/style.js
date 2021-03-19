@@ -20,6 +20,10 @@ export default StyleSheet.create({
         flex:1,
         flexDirection:'row',
         backgroundColor:'#ddd444'
+    },
+    
+    container:{
+        width:'25%'
     }
 })
 

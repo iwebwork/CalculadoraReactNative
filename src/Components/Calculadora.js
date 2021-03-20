@@ -10,6 +10,13 @@ import Btn from './Button'
 
 export default class Calculadora extends Component {
 
+    /*
+        Algoritmo:
+        Pegar o conteudo do input
+        Fazer um split aonde tem caracteres diferentes de numeros
+        percorres este array e utilizar suas respectivas funções conforme necessario
+    */ 
+    
     state = {
         input : ''
     }
@@ -25,6 +32,22 @@ export default class Calculadora extends Component {
 
     clearText = () => {
         this.setState({input: ''})
+    }
+
+    parenteses = () => {
+        const a = this.state.input.lastIndexOf('(')
+        const b = this.state.input.lastIndexOf(')')
+
+        if (a == b){
+            this.setState({input : this.state.input + '('})
+        }
+        else if (a > b) {
+            this.setState({input : this.state.input + ')'})
+        }
+        else if (a < b) {
+            this.setState({input : this.state.input + '('})
+        }
+        
     }
 
     render(){
@@ -50,7 +73,7 @@ export default class Calculadora extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.changeText('()')}
+                        onPress={() => this.parenteses()}
                         style={Body.container}
                     >
                         <Btn 

@@ -9,7 +9,8 @@ export default props => {
 
     return (
         <>
-            <TextInput 
+            <TextInput
+                multiline={true} 
                 showSoftInputOnFocus={false}
                 style={style.input}
                 value={texto}

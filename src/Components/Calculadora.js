@@ -17,8 +17,14 @@ export default class Calculadora extends Component {
         console.warn('foi numero ' + num)
     }
 
-    changeText = (input) => {
-        
+    changeText = (value) => {
+        const a = this.state.input + value
+        // console.warn(value)
+        this.setState({input: a})
+    }
+
+    clearText = () => {
+        this.setState({input: ''})
     }
 
     render(){
@@ -29,13 +35,13 @@ export default class Calculadora extends Component {
                 </SafeAreaView>
 
                 <SafeAreaView style={Body.body}>
-                    <Edit text={this.state.body}/>
-                    <Text style={Body.Preview}>Preview</Text>
+                    <Edit text={this.state.input}/>
+                    <Text style={Body.Preview}>Preview</Text>   
                 </SafeAreaView>
 
                 <SafeAreaView style={Body.horizontal}>
                     <TouchableOpacity
-                        onPress={() => this.execute('C')}
+                        onPress={() => this.clearText()}
                         style={Body.container}
                     >
                         
@@ -44,7 +50,7 @@ export default class Calculadora extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.execute('()')}
+                        onPress={() => this.changeText('()')}
                         style={Body.container}
                     >
                         <Btn 
@@ -52,7 +58,7 @@ export default class Calculadora extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.execute('%')}
+                        onPress={() => this.changeText('%')}
                         style={Body.container}
                     >
                         <Btn 
@@ -60,7 +66,7 @@ export default class Calculadora extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.execute('/')}
+                        onPress={() => this.changeText('/')}
                         style={Body.container}
                     >
                         <Btn 
@@ -71,7 +77,7 @@ export default class Calculadora extends Component {
                 </SafeAreaView>
                 <SafeAreaView style={Body.horizontal}>
                     <TouchableOpacity
-                        onPress={() => this.execute('7')}
+                        onPress={() => this.changeText('7')}
                         style={Body.container}
                     >
                         <Btn 
@@ -79,7 +85,7 @@ export default class Calculadora extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.execute('8')}
+                        onPress={() => this.changeText('8')}
                         style={Body.container}
                     >
                         <Btn 
@@ -87,7 +93,7 @@ export default class Calculadora extends Component {
                         />    
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.execute('9')}
+                        onPress={() => this.changeText('9')}
                         style={Body.container}
                     >
                         <Btn 
@@ -95,7 +101,7 @@ export default class Calculadora extends Component {
                         />    
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.execute('X')}
+                        onPress={() => this.changeText('X')}
                         style={Body.container}
                     >
                         <Btn 
@@ -106,7 +112,7 @@ export default class Calculadora extends Component {
                 </SafeAreaView>
                 <SafeAreaView style={Body.horizontal}>
                     <TouchableOpacity
-                        onPress={() => this.execute('4')}
+                        onPress={() => this.changeText('4')}
                         style={Body.container}
                     >
                         <Btn 
@@ -114,7 +120,7 @@ export default class Calculadora extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.execute('5')}
+                        onPress={() => this.changeText('5')}
                         style={Body.container}
                     >
                         <Btn 
@@ -122,7 +128,7 @@ export default class Calculadora extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.execute('6')}
+                        onPress={() => this.changeText('6')}
                         style={Body.container}
                     >
                         <Btn 
@@ -130,7 +136,7 @@ export default class Calculadora extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.execute('-')}
+                        onPress={() => this.changeText('-')}
                         style={Body.container}
                     >
                         <Btn 
@@ -141,7 +147,7 @@ export default class Calculadora extends Component {
                 </SafeAreaView>
                 <SafeAreaView style={Body.horizontal}>
                     <TouchableOpacity
-                        onPress={() => this.execute('1')}
+                        onPress={() => this.changeText('1')}
                         style={Body.container}
                     >
                         <Btn 
@@ -150,7 +156,7 @@ export default class Calculadora extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={Body.container}
-                        onPress={() => this.execute('2')}
+                        onPress={() => this.changeText('2')}
                     >
                         <Btn 
                             text={'2'}
@@ -158,7 +164,7 @@ export default class Calculadora extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={Body.container}
-                        onPress={() => this.execute('3')}
+                        onPress={() => this.changeText('3')}
                     >
                         <Btn 
                             text={'3'}
@@ -166,7 +172,7 @@ export default class Calculadora extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={Body.container}
-                        onPress={() => this.execute('+')}
+                        onPress={() => this.changeText('+')}
                     >
                         <Btn 
                             text={'+'}
@@ -177,7 +183,7 @@ export default class Calculadora extends Component {
                 <SafeAreaView style={Body.horizontal}>
                     <TouchableOpacity
                         style={Body.container}
-                        onPress={() => this.execute('+/-')}
+                        onPress={() => this.changeText('+/-')}
                     >
                         <Btn 
                             text={'+/-'}
@@ -185,7 +191,7 @@ export default class Calculadora extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={Body.container}
-                        onPress={() => this.execute('0')}
+                        onPress={() => this.changeText('0')}
                     >
                         <Btn 
                             text={'0'}
@@ -193,7 +199,7 @@ export default class Calculadora extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={Body.container}
-                        onPress={() => this.execute('.')}
+                        onPress={() => this.changeText('.')}
                     >
                         <Btn 
                             text={'.'}
@@ -201,7 +207,7 @@ export default class Calculadora extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={Body.container}
-                        onPress={() => this.execute('=')}
+                        onPress={() => this.changeText('=')}
                     >
                         <Btn 
                             text={'='}

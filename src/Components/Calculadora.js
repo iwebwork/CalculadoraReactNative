@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import {Text,SafeAreaView,TouchableOpacity} from 'react-native'
-
+import {SafeAreaView} from 'react-native'
 
 // Styles
 import Body from '../assets/style'
@@ -8,235 +7,195 @@ import Body from '../assets/style'
 import Edit from './Input'
 import Btn from './Button'
 
-export default class Calculadora extends Component {
 
-    /*
-        Algoritmo:
-        Pegar o conteudo do input
-        Fazer um split aonde tem caracteres diferentes de numeros
-        percorres este array e utilizar suas respectivas funções conforme necessario
-    */ 
+const inicialState = {
+    displayValue:'0',
+    clearDisplay:false,
+    operation:null,
+    values:[0,0],
+    current:0
+}
+
+export default class Calculadora extends Component {
     
     state = {
-        input : ''
-    }
-    execute = (num) => {
-        console.warn('foi numero ' + num)
+        ...inicialState
     }
 
-    changeText = (value) => {
-        const a = this.state.input + value
-        // console.warn(value)
-        this.setState({input: a})
+    changeText = value => {
+
+        const clearDisplay = this.state.displayValue === '0' || this.state.clearDisplay
+        
+        if(value === '.' && !clearDisplay && !clearDisplay && this.state.displayValue.includes('.')){
+            return 
+        }
+        
+        const currentValue = clearDisplay ? '' : this.state.displayValue
+        const displayValue = currentValue + value
+
+        // console.warn(displayValue)
+        
+        
+        this.setState({
+            displayValue: displayValue,
+            clearDisplay:false
+        })
+
+        if(value !== '.'){
+            const newValue = parseFloat(displayValue)
+            const values = [...this.state.values]
+            values[this.state.current] = newValue
+            this.setState({
+                displayValue: displayValue,
+                clearDisplay:false,
+                values
+            })
+        }
     }
 
     clearText = () => {
-        this.setState({input: ''})
+        this.setState({...inicialState})
     }
 
-    parenteses = () => {
-        const a = this.state.input.lastIndexOf('(')
-        const b = this.state.input.lastIndexOf(')')
+    setOperation = operation => {
+        // console.warn(operation)
+        if(this.state.current === 0){
+            this.setState({
+                operation, 
+                clearDisplay:true,
+                current:1,
+            })
+        }else {
+            const equals = operation === '='
+            console.warn(this.state.values)
+            const values = [...this.state.values]
 
-        if (a == b){
-            this.setState({input : this.state.input + '('})
+            try {
+                values[0] = eval(`${values[0]} ${this.state.operation} ${values[1]}`)
+                // console.warn('foi '+ values[0] + this.state.operation + values[1])
+            } catch (error) {
+                values[0] = this.state.values[0]
+                // console.warn('não ' + values)
+            }
+            values[1] = 0
+            this.setState({
+                displayValue:`${values[0]}`,
+                operation:equals ? null : operation,
+                current:equals ? 0 : 1,
+                clearDisplay:!equals,
+                values
+            })
         }
-        else if (a > b) {
-            this.setState({input : this.state.input + ')'})
-        }
-        else if (a < b) {
-            this.setState({input : this.state.input + '('})
-        }
-        
     }
 
     render(){
         return(
             <>
-                <SafeAreaView style={Body.title}>
-                    <Text style={{fontSize:20}}>Bem vindo a calculadora</Text>
-                </SafeAreaView>
-
                 <SafeAreaView style={Body.body}>
-                    <Edit text={this.state.input}/>
-                    <Text style={Body.Preview}>Preview</Text>   
+                    <Edit 
+                        text={this.state.displayValue}
+                        // preview={this.state.displayPreview}
+                    />                                                   
                 </SafeAreaView>
 
                 <SafeAreaView style={Body.horizontal}>
-                    <TouchableOpacity
-                        onPress={() => this.clearText()}
-                        style={Body.container}
-                    >
+                    <Btn 
+                        text={'C'}
+                        style={'bunttonTree'}
+                        OnClick={this.clearText}
+                    />
+                    <Btn 
+                        style={'buttonOne'}
+                        text={'/'}
+                        OnClick={this.setOperation}
+                    />
+                </SafeAreaView>
+                <SafeAreaView style={Body.horizontal}>
+                    <Btn 
+                        text={'7'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />
+                    <Btn 
+                        text={'8'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />    
+                    <Btn 
+                        text={'9'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />    
+                    <Btn 
+                        text={'X'}
+                        style={'buttonOne'}
+                        OnClick={this.setOperation}
+                    />
+                    
+                </SafeAreaView>
+                <SafeAreaView style={Body.horizontal}>
+                    <Btn 
+                        text={'4'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />
+                    <Btn 
+                        text={'5'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />
+                    <Btn 
+                        text={'6'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />
+                    <Btn 
+                        text={'-'}
+                        style={'buttonOne'}
+                        OnClick={this.setOperation}
                         
-                        <Btn 
-                            text={'C'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.parenteses()}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'()'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('%')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'%'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('/')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'/'}
-                        />
-                    </TouchableOpacity>
+                    />
+                </SafeAreaView>
+                <SafeAreaView style={Body.horizontal}>
+                    <Btn 
+                        text={'1'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />
+                    <Btn 
+                        text={'2'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />
+                    <Btn 
+                        text={'3'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />
+                    <Btn 
+                        text={'+'}
+                        style={'buttonOne'}
+                        OnClick={this.setOperation}
+
+                    />
                     
                 </SafeAreaView>
                 <SafeAreaView style={Body.horizontal}>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('7')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'7'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('8')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'8'}
-                        />    
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('9')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'9'}
-                        />    
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('X')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'X'}
-                        />
-                    </TouchableOpacity>
-                    
-                </SafeAreaView>
-                <SafeAreaView style={Body.horizontal}>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('4')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'4'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('5')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'5'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('6')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'6'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('-')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'-'}
-                        />
-                    </TouchableOpacity>
-                    
-                </SafeAreaView>
-                <SafeAreaView style={Body.horizontal}>
-                    <TouchableOpacity
-                        onPress={() => this.changeText('1')}
-                        style={Body.container}
-                    >
-                        <Btn 
-                            text={'1'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={Body.container}
-                        onPress={() => this.changeText('2')}
-                    >
-                        <Btn 
-                            text={'2'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={Body.container}
-                        onPress={() => this.changeText('3')}
-                    >
-                        <Btn 
-                            text={'3'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={Body.container}
-                        onPress={() => this.changeText('+')}
-                    >
-                        <Btn 
-                            text={'+'}
-                        />
-                    </TouchableOpacity>
-                    
-                </SafeAreaView>
-                <SafeAreaView style={Body.horizontal}>
-                    <TouchableOpacity
-                        style={Body.container}
-                        onPress={() => this.changeText('+/-')}
-                    >
-                        <Btn 
-                            text={'+/-'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={Body.container}
-                        onPress={() => this.changeText('0')}
-                    >
-                        <Btn 
-                            text={'0'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={Body.container}
-                        onPress={() => this.changeText('.')}
-                    >
-                        <Btn 
-                            text={'.'}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={Body.container}
-                        onPress={() => this.changeText('=')}
-                    >
-                        <Btn 
-                            text={'='}
-                        />
-                    </TouchableOpacity>
-                    
+                    <Btn 
+                        text={'0'}
+                        style={'buttonDouble'}
+                        OnClick={this.changeText}
+                    />
+                    <Btn 
+                        text={'.'}
+                        style={'buttonOne'}
+                        OnClick={this.changeText}
+                    />
+                    <Btn 
+                        text={'='}
+                        style={'buttonOne'}
+                        OnClick={this.setOperation}
+                    />
                 </SafeAreaView>
                 
             </>

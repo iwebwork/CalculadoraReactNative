@@ -10,12 +10,6 @@ export default StyleSheet.create({
         flex:6,
         backgroundColor:'#cccc'
     },
-    Preview:{
-        flex:1,
-        alignItems:'flex-end',
-        textAlign:'right',
-        fontSize:20
-    },
     horizontal:{
         flex:1,
         flexDirection:'row',

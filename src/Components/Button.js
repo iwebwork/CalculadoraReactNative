@@ -1,31 +1,57 @@
 import React from 'react' 
-import {SafeAreaView,Text} from 'react-native' 
+import {Text, Dimensions,TouchableHighlight} from 'react-native' 
 
 import {StyleSheet} from 'react-native';
 
 export default props => {
-    const texto = props.text
+    const label = props.text
 
     return (
-        <SafeAreaView style={[style.button]}>            
-                <Text style={style.buttonText}>
-                    {texto}
-                </Text>
-        </SafeAreaView>
+        <TouchableHighlight 
+            onPress={() => props.OnClick(props.text)}
+        >           
+            {
+                props.style === 'buttonOne'?
+                    <Text style={[style.body, style.buttonOne]}>
+                        {label}
+                    </Text>:
+                props.style === 'buttonDouble'?
+                    <Text style={[style.body, style.buttonDouble]}>
+                        {label}
+                    </Text>:
+                    <Text style={[style.body, style.buttonTree]}>
+                        {label}
+                    </Text>
+            }
+                
+            
+        </TouchableHighlight>
     )
 }
 
 const style = StyleSheet.create({
     
-    button:{
-        alignItems:'center',
-        backgroundColor:'#0000ff',
-        margin:1,
-    },
-    buttonText: {
+    body:{
         fontSize:40,
-        color:'#FFFF',
-        alignItems:'center'
+        height:Dimensions.get('window').width / 4,
+        alignItems:'center',
+        textAlign:'center',
+        backgroundColor:'#FFF',
+        borderWidth:1,
+        borderColor:"#888"
+    },
+
+    buttonOne: {
+        width:Dimensions.get('window').width / 4
+    },
+
+    buttonDouble:{
+        width:(Dimensions.get('window').width / 4) * 2
+    
+    },
+    buttonTree:{
+        width:(Dimensions.get('window').width / 4) * 3
     }
+
     
 })

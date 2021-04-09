@@ -1,30 +1,39 @@
-import React from 'react' 
-import {TextInput} from 'react-native' 
+import React, {Component} from 'react' 
+import {TextInput, Text, setState} from 'react-native' 
 
 import {StyleSheet} from 'react-native';
 
-export default props => {
+import {montarExpressao} from '../funcoes'
 
-    const texto = props.text
+export default props => {
 
     return (
         <>
-            <TextInput
-                multiline={true} 
-                showSoftInputOnFocus={false}
+            <Text
                 style={style.input}
-                value={texto}
-            />
+            >
+                {props.text}
+            </Text>
+            {/* <Text style={style.Preview}>{props.preview}</Text>    */}
+
         </>
     )
+    
 }
 
 const style = StyleSheet.create({
     input: {
         flex:6,
         fontSize:60,
-        backgroundColor:'#f34',
+        backgroundColor:'#999',
         textAlign: 'center'
+    },
+    Preview:{
+        flex:1,
+        alignItems:'flex-end',
+        textAlign:'right',
+        fontSize:20,
+        margin:2
     }
     
 })
